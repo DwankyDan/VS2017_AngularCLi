@@ -24,7 +24,8 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -347,7 +348,7 @@
   <Target Name="BeforeBuild">
   </Target>-->
   <Target Name="AfterBuild">
-    <Exec Command="ng build" WorkingDirectory="$(ProjectDir)" Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
+    <Exec Command="ng build --output-hashing all" WorkingDirectory="$(ProjectDir)" Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
     <Exec Command="ng build --prod" WorkingDirectory="$(ProjectDir)" Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
   </Target>
 </Project>

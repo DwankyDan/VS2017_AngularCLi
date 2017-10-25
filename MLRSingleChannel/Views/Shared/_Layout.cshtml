@@ -1,7 +1,4 @@
 @{
-    //string version = typeof(CodeProject.Angular4.Portal.RouteConfig).Assembly.GetName().Version;
-    //string version = new Guid().ToString();
-
     //string webApiEndPoint = System.Configuration.ConfigurationManager.AppSettings["WebApiEndPoint"];
 
     string currentRoute = "/";
@@ -43,50 +40,27 @@
   @RenderBody()
 
   <app-root webApiEndPoint="http://localhost:55499/api/">Loading...</app-root>
-  @*<script type="text/javascript" src="~/Scripts/NgApp/inline.bundle.js"></script>
-    <script type="text/javascript" src="~/Scripts/NgApp/polyfills.bundle.js"></script>
-    <script type="text/javascript" src="~/Scripts/NgApp/styles.bundle.js"></script>
-    <script type="text/javascript" src="~/Scripts/NgApp/vendor.bundle.js"></script>
-    <script type="text/javascript" src="~/Scripts/NgApp/main.bundle.js"></script>*@
 
-  @if (HttpContext.Current.IsDebuggingEnabled)
-  {
-    <script type="text/javascript" src="~/Scripts/NgApp/inline.bundle.js"></script>
-    <script type="text/javascript" src="~/Scripts/NgApp/polyfills.bundle.js"></script>
-    <script type="text/javascript" src="~/Scripts/NgApp/styles.bundle.js"></script>
-    <script type="text/javascript" src="~/Scripts/NgApp/vendor.bundle.js"></script>
-    <script type="text/javascript" src="~/Scripts/NgApp/main.bundle.js"></script>
-
-
-    @*<script src="~/Scripts/NgApp/inline.bundle.js?v=@version"></script>
-      <script src="~/Scripts/NgApp/polyfills.bundle.js?v=@version"></script>
-      <script src="~/Scripts/NgApp/dist/styles.bundle.js?v=@version"></script>
-      <script src="~/Scripts/NgApp/vendor.bundle.js?v=@version"></script>
-      <script src="~/Scripts/NgApp/main.bundle.js?v=@version"></script>*@
-  }
-  else
-  {
-    foreach (string bundleName in bundles)
-    {
-      foreach (string fileName in fileEntries)
+  @{
+      foreach (string bundleName in bundles)
       {
-        FileInfo fileInfo = new FileInfo(fileName);
-        if (fileInfo.Name.Contains(bundleName) && fileInfo.Name.Contains(".map") == false)
+        foreach (string fileName in fileEntries)
         {
-          if (fileInfo.Name.Contains("styles"))
+          FileInfo fileInfo = new FileInfo(fileName);
+          if (fileInfo.Name.Contains(bundleName) && fileInfo.Name.Contains(".map") == false)
           {
-            <link href="~/dist/@fileInfo.Name" rel="stylesheet" />
+            if (fileInfo.Name.Contains("styles"))
+            {
+              <link href="~/Scripts/NgApp/@fileInfo.Name" rel="stylesheet" />
+            }
+            else
+            {
+              <script src="~/Scripts/NgApp/@fileInfo.Name"></script>
+            }
           }
-          else
-          {
-            <script src="~/Scripts/NgApp/@fileInfo.Name"></script>
-          }
+
         }
-
       }
-
-    }
-
   }
 </body>
 </html>
